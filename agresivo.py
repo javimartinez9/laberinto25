@@ -1,3 +1,4 @@
+import time
 from modo import Modo
 
 class Agresivo(Modo):
@@ -5,13 +6,14 @@ class Agresivo(Modo):
         super().__init__()
 
     def dormir(self, bicho):
-        print("Agresivo->Dormitando un rato....")
+        print("Agresivo: Durmiendo un poco...")
+        time.sleep(1)
 
     def caminar(self, bicho):
-        print("Agresivo->Caminando....")
+        print("Agresivo: Caminando con determinación...")
 
     def atacar(self, bicho):
-        print("Agresivo->Atacando ferozmente....")
+        print("Agresivo: ¡Atacando con furia!")
 
     def __str__(self):
-        return "Soy un bicho modo agresivo"
+        return "-agresivo"

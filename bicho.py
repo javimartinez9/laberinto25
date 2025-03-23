@@ -1,16 +1,19 @@
 from modo import Modo
 from agresivo import Agresivo
-from perezoso import Perezoso 
+from perezoso import Perezoso
+from ente import Ente
 
-class Bicho:
-    def __init__(self, vidas, poder, posicion, modo):
-        self.vidas = vidas
-        self.poder = poder
-        self.posicion = posicion
+class Bicho(Ente):
+    def __init__(self,vidas,poder,posicion,modo):
         self.modo = modo
+        self.running = True
+        self.poder = poder
+        self.vidas = vidas
+        self.posicion = posicion
 
     def actua(self):
-        self.modo.actuar(self)
+        while self.estaVivo():
+            self.modo.actuar(self)
 
     def iniAgresivo(self):
         self.modo = Agresivo()
@@ -22,5 +25,8 @@ class Bicho:
         self.poder = 1
         self.vidas = 5
 
+    def estaVivo(self):
+        return self.vidas > 0
+
     def __str__(self):
-        return "Soy un bicho"
+        return "Soy un bicho"+self.modo.__str__()
