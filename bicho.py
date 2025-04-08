@@ -1,15 +1,14 @@
 from modo import Modo
 from agresivo import Agresivo
-from perezoso import Perezoso
 from ente import Ente
 
 class Bicho(Ente):
-    def __init__(self, vidas, poder, posicion, modo):
-        self.modo = modo
+    def __init__(self):
+        self.modo = None
         self.running = True
-        self.poder = poder
-        self.vidas = vidas
-        self.posicion = posicion
+        self.poder = None
+        self.vidas = None
+        self.posicion = None
 
     def actua(self):
         while self.estaVivo():
@@ -21,7 +20,6 @@ class Bicho(Ente):
         self.vidas = 5
 
     def iniPerezoso(self):
-        self.perezoso=Perezoso()
         self.poder = 1
         self.vidas = 5
 
