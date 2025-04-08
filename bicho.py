@@ -4,7 +4,7 @@ from perezoso import Perezoso
 from ente import Ente
 
 class Bicho(Ente):
-    def __init__(self,vidas,poder,posicion,modo):
+    def __init__(self, vidas, poder, posicion, modo):
         self.modo = modo
         self.running = True
         self.poder = poder
@@ -21,7 +21,7 @@ class Bicho(Ente):
         self.vidas = 5
 
     def iniPerezoso(self):
-        self.modo=Perezoso()
+        self.perezoso=Perezoso()
         self.poder = 1
         self.vidas = 5
 

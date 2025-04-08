@@ -21,7 +21,8 @@ class Director:
         self.builder.fabricarJuego()
 
     def iniBuilder(self):
-        self.builder=LaberintoBuilder()
+        if self.dict['forma']=='cuadrado':
+            self.builder=LaberintoBuilder()
 
     def fabricarLaberinto(self):
         self.builder.fabricarLaberinto()
@@ -39,8 +40,9 @@ class Director:
         print(each)
         if each['tipo']=='habitacion':
             con=self.builder.fabricarHabitacion(each['num'])
-        
-        if each['hijos']!=None:
+        if each['tipo']=='tunel':
+            self.builder.fabricarTunelEn(padre)
+        if 'hijos'in each.keys():
             for cadaUno in each['hijos']:
                 self.fabricarLaberintoRecursivo(cadaUno,con)
 
