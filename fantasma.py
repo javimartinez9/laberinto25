@@ -1,11 +1,12 @@
 from caracter import Caracter
 from supporter import Supporter
+from dormilon import Dormilon
 class Fantasma:
-    def __init__(self, vidas, poderMagico, posicion, caracter):
-        self.vidas = vidas
-        self.poderMagico = poderMagico
-        self.posicion = posicion
-        self.caracter = caracter
+    def __init__(self):
+        self.vidas = None
+        self.poderMagico = None
+        self.posicion = None
+        self.caracter = None
 
     def iniSupporter(self):
         self.caracter = Supporter()
@@ -13,6 +14,7 @@ class Fantasma:
         self.vidas = 5
 
     def iniDormilon(self):
+        self.caracter=Dormilon()
         self.poderMagico = 0
         self.vidas = 5
     

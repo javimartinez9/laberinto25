@@ -17,7 +17,7 @@ from pared_bomba import ParedBomba
 from ente import Personaje
 from pared_cohete import ParedCohete
 from cohete import Cohete
-from fanstasma import Fantasma
+from fantasma import Fantasma
 from supporter import Supporter
 from dormilon import Dormilon
 
@@ -230,19 +230,32 @@ class Juego:
         habitacion4.ponerElementoEnOrientacion(puerta34, Norte())
         habitacion4.ponerElementoEnOrientacion(puerta24, Oeste())
 
-        fantasma1 = creator.crear_fantasma(5, 10, habitacion1, creator.crear_caracter_supporter())
+        # Crear y configurar los fantasmas
+        fantasma1 = Fantasma()
+        fantasma1.iniSupporter()  # Inicializar como Supporter
+        fantasma1.posicion = habitacion1
         self.agregar_fantasma(fantasma1)
-        fantasma3 = creator.crear_fantasma(5, 10, habitacion3, creator.crear_caracter_supporter())
-        self.agregar_fantasma(fantasma3)
-        fantasma2 = creator.crear_fantasma(5, 1, habitacion2, creator.crear_caracter_dormilon())
+
+        fantasma2 = Fantasma()
+        fantasma2.iniDormilon()  # Inicializar como Dormilon
+        fantasma2.posicion = habitacion2
         self.agregar_fantasma(fantasma2)
-        fantasma4 = creator.crear_fantasma(5, 1, habitacion4, creator.crear_caracter_dormilon())
+
+        fantasma3 = Fantasma()
+        fantasma3.iniSupporter()  # Inicializar como Supporter
+        fantasma3.posicion = habitacion3
+        self.agregar_fantasma(fantasma3)
+
+        fantasma4 = Fantasma()
+        fantasma4.iniDormilon()  # Inicializar como Dormilon
+        fantasma4.posicion = habitacion4
         self.agregar_fantasma(fantasma4)
 
+        # Asignar los fantasmas a las habitaciones
         habitacion1.fantasma = fantasma1
         habitacion2.fantasma = fantasma2
         habitacion3.fantasma = fantasma3
-        habitacion4.fantasma= fantasma4
+        habitacion4.fantasma = fantasma4
 
         laberinto.agregarHabitacion(habitacion1)
         laberinto.agregarHabitacion(habitacion2)
@@ -250,6 +263,7 @@ class Juego:
         laberinto.agregarHabitacion(habitacion4)
 
         return laberinto
+
 
     def terminarJuego(self):
         self.terminarBichos()

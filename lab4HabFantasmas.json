@@ -19,7 +19,7 @@
 		{"modo": "Perezoso", "posicion": 4}
 	],
 	"fantasmas": [
-		{"caracter": "supporter", "posicion": 1},
-		{"caracter": "dormilon", "posicion": 3}
+		{"caracter": "Supporter", "posicion": 1},
+		{"caracter": "Dormilon", "posicion": 3}
 	]
 }
