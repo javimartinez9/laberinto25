@@ -1,5 +1,6 @@
 import json
 from laberinto_builder import LaberintoBuilder
+from laberintobuilderconfantasmas import LaberintoBuilderConFantasmas
 
 
 class Director:
@@ -16,6 +17,7 @@ class Director:
         self.fabricarLaberinto()
         self.fabricarJuego()
         self.fabricarBichos()
+        self.fabricarFantasmas()
 
     def fabricarJuego(self):
         self.builder.fabricarJuego()
@@ -23,6 +25,8 @@ class Director:
     def iniBuilder(self):
         if self.dict['forma']=='cuadrado':
             self.builder=LaberintoBuilder()
+        elif self.dict['forma'] == 'cuadrado_con_fantasmas':
+            self.builder = LaberintoBuilderConFantasmas()
 
     def fabricarLaberinto(self):
         self.builder.fabricarLaberinto()
@@ -62,3 +66,7 @@ class Director:
     def fabricarBichos(self):
         for each in self.dict['bichos']:
             self.builder.fabricarBicho(each['modo'],each['posicion'])
+            
+    def fabricarFantasmas(self):
+        for each in self.dict['fantasmas']:
+            self.builder.fabricarFantasma(each['caracter'],each['posicion'])

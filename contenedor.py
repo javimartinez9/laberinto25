@@ -32,3 +32,12 @@ class Contenedor(ElementoMapa):
 
     def obtenerElementoEnOrientacion(self, orientacion):
         return self.forma.obtenerElementoEnOrientacion(orientacion)
+    
+    def caminarAleatorio(self, bicho):
+        self.forma.caminarAleatorio(bicho)
+
+    def aceptar(self, unVisitor):
+        self.visitarContenedor(unVisitor)
+        for hijo in self.hijos:
+            hijo.aceptar(unVisitor)
+        self.forma.aceptar(unVisitor)

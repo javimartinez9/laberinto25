@@ -7,7 +7,7 @@ import time
 
 director = Director()
 
-filename = "./lab4Hab.json"
+filename = "./lab4HabFantasmas.json"
 
 data = director.leerArchivo(filename)
 if data:
@@ -28,6 +28,11 @@ for bicho in juego.bichos:
     print(bicho)
     print(f"Bicho con {bicho.vidas} vidas y {bicho.poder} de poder")
     print(f"Posición {bicho.posicion.num}")
+    
+for fantasma in juego.fantasmas:
+    print(fantasma)
+    print(f"Fantasma con {fantasma.vidas} vidas y {fantasma.poderMagico} de poder")
+    print(f"Posición {fantasma.posicion.num}")
 
 juego.abrir_puertas()
 juego.lanzarBichos()

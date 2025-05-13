@@ -1,10 +1,12 @@
-from juego import Habitacion, Laberinto, Pared, Puerta, ParedBomba, Bomba, Bicho, Agresivo, Perezoso
+from juego import Habitacion, Laberinto, Pared, Puerta, ParedBomba, Bomba, Bicho, Agresivo, Perezoso,ParedCohete,Cohete,Fantasma,Supporter,Dormilon
 from norte import Norte
 from sur import Sur
 from este import Este
 from oeste import Oeste
 from orientacion import Orientacion
 from cuadrado import Cuadrado
+
+
 class Creator:
     def crear_habitacion(self, num):
         habitacion = Habitacion(num)
@@ -50,6 +52,9 @@ class Creator:
 
     def crear_bomba(self, em):
         return Bomba(em)
+    
+    def crear_cohete(self, em):
+        return Cohete(em)
 
     def crear_bicho(self,vidas,poder,posicion,modo):
         bicho=Bicho()
@@ -58,6 +63,15 @@ class Creator:
         bicho.posicion=posicion
         bicho.modo=modo
         return bicho
+    
+    def crear_fantasma(self, vidas, poderMagico, posicion, caracter):
+        return Fantasma(vidas, poderMagico, posicion, caracter)
+    
+    def crear_caracter_supporter(self):
+        return Supporter()
+    
+    def crear_caracter_dormilon(self):
+        return Dormilon()
 
     def crear_modo_agresivo(self):
         return Agresivo()
@@ -68,3 +82,9 @@ class Creator:
 class CreatorB(Creator):
     def crear_pared(self):
         return ParedBomba()
+    
+class CreatorC(Creator):
+    def crear_pared(self):
+        print("🛠 CreatorC ha creado una ParedCohete")
+        return ParedCohete()
+       
