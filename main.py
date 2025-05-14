@@ -68,6 +68,11 @@ for fantasma in juego.fantasmas:
     print(fantasma)
     print(f"Fantasma con {fantasma.vidas} vidas y {fantasma.poderMagico} de poder Magico")
     print(f"Posición {fantasma.posicion.num}")
+    
+for bicho in juego.bichos:
+    print(bicho)
+    print(f"bicho con {bicho.vidas} vidas y {bicho.poder} de poder")
+    print(f"Posición {bicho.posicion.num}")
 
 """
 juego=Juego()

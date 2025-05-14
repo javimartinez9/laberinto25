@@ -6,7 +6,7 @@ class Habitacion(Contenedor):
         self.num = num
 
     def entrar(self, alguien):
-        print(f"Entrando en la habitación {self.num}")
+        print(f"Entrando en la habitación {self.num}",alguien)
         alguien.posicion=self
 
     def visitarContenedor(self, unVisitor):

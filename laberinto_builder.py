@@ -14,6 +14,7 @@ from perezoso import Perezoso
 from cuadrado import Cuadrado
 from juego import Juego
 from tunel import Tunel
+from ente import Personaje
 
 class LaberintoBuilder:
     def __init__(self):
@@ -27,6 +28,12 @@ class LaberintoBuilder:
 
     def fabricarLaberinto(self):
         self.laberinto = Laberinto()
+        
+    def fabricarPersonaje(self,vidas,posicion,nombre):
+        personaje=Personaje(vidas, posicion, self.laberinto, nombre) 
+        hab=self.laberinto.obtenerHabitacion(posicion)
+        hab.entrar(personaje)
+        self.juego.agregar_personaje(personaje)
 
     def fabricarHabitacion(self, num):
         hab=Habitacion(num)	
@@ -40,6 +47,17 @@ class LaberintoBuilder:
             hab.ponerElementoEnOrientacion(self.fabricarPared(),each)
         self.laberinto.agregarHabitacion(hab)
         return hab
+    
+    def interactuarConBichos(self):
+        personaje = self.juego.personaje
+        bichos = self.juego.bichos
+
+        for bicho in bichos:
+            if bicho.posicion == personaje.posicion:
+                print(f"Interacción entre {personaje} y {bicho}")
+                personaje.esAtacadoPor(bicho)
+                if personaje.vidas > 0:
+                    bicho.esAtacadoPor(personaje)
 
     def fabricarPared(self):
         return Pared()
@@ -105,6 +123,8 @@ class LaberintoBuilder:
             bicho=self.fabricarBichoAgresivo()
         if modo=='Perezoso':
             bicho=self.fabricarBichoPerezoso()
+            
         hab=self.laberinto.obtenerHabitacion(posicion)
+        
         hab.entrar(bicho)
         self.juego.agregar_bicho(bicho)

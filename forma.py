@@ -4,7 +4,8 @@ class Forma:
     def __init__(self):
         self.orientaciones = []
         self.num=None
-        self.punto=None
+        #self.punto=None
+        self.punto=Point(0,0)
         self.extent=Point(0,0)
 
     def agregarOrientacion(self, orientacion):

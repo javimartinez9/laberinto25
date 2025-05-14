@@ -19,6 +19,48 @@ class MazeGUI:
         director.procesar(self.laberinto_file)
         self.juego = director.obtenerJuego()
         self.juego.agregar_personaje("Pepe")
+        
+        self.personaje = self.juego.personaje  # Guarda el personaje
+        self.bichos = self.juego.bichos        # Lista de bichos
+        
+        # Asegúrate de que los bichos estén apuntando a las habitaciones correctas
+        for bicho in self.bichos:
+            if isinstance(bicho.posicion, int):  # Si la posición es solo un número, obtenemos la habitación
+                bicho.posicion = self.juego.obtenerHabitacion(bicho.posicion)
+            
+        print(f"Bichos cargados: {self.bichos}")  # Depuración de los bichos
+
+        
+    def draw_person(self):
+        hab = self.personaje.posicion
+        print("personaje posiciononnn",self.personaje.posicion)
+        print("personaje posicion num",self.personaje.posicion.num)
+        print("forma x personajeee",hab.forma.punto.x)
+        x = hab.forma.punto.x + hab.forma.extent.x // 2
+        y = hab.forma.punto.y + hab.forma.extent.y // 2
+
+        radio = 10
+        self.canvas.create_oval(x - radio, y - radio, x + radio, y + radio, fill="blue", outline="black")
+        self.canvas.create_text(x, y - 15, text=self.personaje.nombre, fill="black", font=("Arial", 8))
+
+    def draw_bichos(self):
+        colores = ["red", "green", "orange", "purple"]
+        for idx, bicho in enumerate(self.bichos):
+            # Resuelve la habitación a partir del número de la posición del bicho
+            hab = bicho.posicion  # Aquí ya se debe tener la habitación correcta con las coordenadas transformadas
+
+            print("bicho posicion",bicho.posicion)
+            print("bicho posicion num:", hab.num)
+            print("forma x bichooo:", hab.forma.punto.x)
+            print("forma y bichooo:", hab.forma.punto.y)
+
+            x = hab.forma.punto.x + hab.forma.extent.x // 2
+            y = hab.forma.punto.y + hab.forma.extent.y // 2
+
+            offset = 15 * (idx % 4)  # Pequeño desplazamiento para evitar superposición
+            radio = 8
+            self.canvas.create_oval(x - radio + offset, y - radio + offset, x + radio + offset, y + radio + offset, fill=colores[idx % len(colores)], outline="black")
+            self.canvas.create_text(x + offset, y + offset + 10, text=f"B{idx + 1}", fill="black", font=("Arial", 7))
 
     def init_ui(self):
         self.master.title("Maze Game")
@@ -27,18 +69,18 @@ class MazeGUI:
 
         self.calcularLaberinto()
         for habitacion in self.juego.laberinto.hijos:
-            print("num-punto",habitacion.num,habitacion.forma.punto.x,habitacion.forma.punto.y)
+            print("num-punto", habitacion.num, habitacion.forma.punto.x, habitacion.forma.punto.y)
         self.dibujarLaberinto()
-       #self.draw_maze()
-        #self.draw_person()
-        #self.draw_bichos()
+        self.draw_person()
+        self.draw_bichos()
+        
 
     def calcularLaberinto(self):
         self.calcularPosicion()
         self.normalizar()
         self.calcularTamContenedor()
         self.asignarPuntosReales()
-    
+
     def dibujarLaberinto(self):
         self.juego.laberinto.aceptar(self)
 
@@ -54,23 +96,15 @@ class MazeGUI:
     def visitarTunel(self, tunel):
         pass
 
-    def dibujarRectangulo(self,forma):
-        self.canvas.create_rectangle(forma.punto.x, forma.punto.y, forma.punto.x+forma.extent.x, forma.punto.y+forma.extent.y, fill="lightgray")
-    
-    def draw_person(self):
-        # Implementation to draw the person on the canvas
-        pass
-
-    def draw_bichos(self):
-        # Implementation to draw the bichos on the canvas
-        pass
+    def dibujarRectangulo(self, forma):
+        self.canvas.create_rectangle(forma.punto.x, forma.punto.y, forma.punto.x + forma.extent.x, forma.punto.y + forma.extent.y, fill="lightgray")
 
     def calcularPosicion(self):
         habitacion1 = self.juego.obtenerHabitacion(1)
         habitacion1.forma.punto = Point(0, 0)
         for habitacion in self.juego.laberinto.hijos:
             habitacion.calcularPosicion()
-    
+
     def normalizar(self):
         min_x = 0
         min_y = 0
@@ -85,7 +119,8 @@ class MazeGUI:
             un_punto = each.forma.punto
             nuevo_x = un_punto.x + abs(min_x)
             nuevo_y = un_punto.y + abs(min_y)
-            each.forma.punto = Point(nuevo_x, nuevo_y)  
+            each.forma.punto = Point(nuevo_x, nuevo_y)
+
     def calcularTamContenedor(self):
         max_x = 0
         max_y = 0
@@ -106,15 +141,11 @@ class MazeGUI:
         for each in self.juego.laberinto.hijos:
             x = origen_x + (each.forma.punto.x * self.ancho)
             y = origen_y + (each.forma.punto.y * self.alto)
-            
+
             each.forma.punto = Point(x, y)  # Asumo que Punto(x, y) es una clase
             each.forma.extent = Point(self.ancho, self.alto)
 
-            # Si quisieras incluir la recursión comentada:
-            # for hijo in each.hijos:
-            #     hijo.asignar_puntos_reales(each)
-
 if __name__ == '__main__':
     root = tk.Tk()
-    gui = MazeGUI(root, "./lab4HabIzd4Bichos.json")  # Use a default laberinto file
+    gui = MazeGUI(root, "./lab4HabIzd4Bichos.json")  # Usa un archivo laberinto por defecto
     root.mainloop()

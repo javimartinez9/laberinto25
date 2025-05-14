@@ -229,6 +229,20 @@ class Juego:
         habitacion2.ponerElementoEnOrientacion(puerta24, Este())
         habitacion4.ponerElementoEnOrientacion(puerta34, Norte())
         habitacion4.ponerElementoEnOrientacion(puerta24, Oeste())
+        
+        bicho1 = creator.crear_bicho(5, 10, habitacion1, creator.crear_modo_agresivo())
+        self.agregar_bicho(bicho1)
+        bicho3 = creator.crear_bicho(5, 10, habitacion3, creator.crear_modo_agresivo())
+        self.agregar_bicho(bicho3)
+        bicho2 = creator.crear_bicho(5, 1, habitacion2, creator.crear_modo_perezoso())
+        self.agregar_bicho(bicho2)
+        bicho4 = creator.crear_bicho(5, 1, habitacion4, creator.crear_modo_perezoso())
+        self.agregar_bicho(bicho4)
+
+        habitacion1.bicho = bicho1
+        habitacion2.bicho = bicho2
+        habitacion3.bicho = bicho3
+        habitacion4.bicho = bicho4
 
         # Crear y configurar los fantasmas
         fantasma1 = Fantasma()

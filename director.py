@@ -17,6 +17,7 @@ class Director:
         self.fabricarLaberinto()
         self.fabricarJuego()
         self.fabricarBichos()
+        self.fabricarPersonajes()
         #self.fabricarFantasmas()
 
     def fabricarJuego(self):
@@ -66,6 +67,10 @@ class Director:
     def fabricarBichos(self):
         for each in self.dict['bichos']:
             self.builder.fabricarBicho(each['modo'],each['posicion'])
+            
+    def fabricarPersonajes(self):
+        for each in self.dict['personajes']:
+            self.builder.fabricarPersonaje(each['vidas'],each['posicion'],each['nombre'])
             
     def fabricarFantasmas(self):
         for each in self.dict['fantasmas']:

@@ -1,0 +1,44 @@
+{
+	"forma":"cuadrado",
+	"laberinto":[
+		{
+			"tipo":"habitacion",
+			"num":1,
+			"coordenadas": {"x": 50, "y": 50},
+			"hijos":[
+				{"tipo":"bomba"}
+			]
+		},
+		{
+			"tipo":"habitacion",
+			"num":2,
+			"coordenadas": {"x": 150, "y": 50},
+			"hijos":[]
+		},
+		{
+			"tipo":"habitacion",
+			"num":3,
+			"coordenadas": {"x": 50, "y": 150},
+			"hijos":[]
+		},
+		{
+			"tipo":"habitacion",
+			"num":4,
+			"coordenadas": {"x": 150, "y": 150},
+			"hijos":[
+				{"tipo":"bomba"}
+			]
+		}
+	],
+	"puertas":[
+		[1,"Sur",2,"Norte"],
+		[2,"Oeste",3,"Este"],
+		[3,"Sur",4,"Norte"]
+	],
+	"bichos":[
+		{"modo":"Agresivo","posicion":1},
+		{"modo":"Agresivo","posicion":3},
+		{"modo":"Perezoso","posicion":2},
+		{"modo":"Perezoso","posicion":4}
+	]
+}
