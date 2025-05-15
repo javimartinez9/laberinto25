@@ -21,8 +21,8 @@ class Norte(Orientacion):
     def obtenerElemento(self, forma):
         return forma.norte
 
-    def caminarAleatorio(self, bicho, forma):
-        forma.norte.entrar(bicho)
+    def caminarAleatorio(self,ente, forma):
+        forma.norte.entrar(ente)
 
     def aceptar(self, unVisitor, forma):
         forma.norte.aceptar(unVisitor)

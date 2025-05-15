@@ -47,8 +47,8 @@ class MazeGUI:
         colores = ["red", "green", "orange", "purple"]
         for idx, bicho in enumerate(self.bichos):
             # Resuelve la habitación a partir del número de la posición del bicho
-            hab = bicho.posicion  # Aquí ya se debe tener la habitación correcta con las coordenadas transformadas
-
+            pos = bicho.posicion  # Aquí ya se debe tener la habitación correcta con las coordenadas transformadas
+            hab=juego.obtenerHabitacion(pos)
             print("bicho posicion",bicho.posicion)
             print("bicho posicion num:", hab.num)
             print("forma x bichooo:", hab.forma.punto.x)

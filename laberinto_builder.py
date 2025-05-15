@@ -8,6 +8,7 @@ from este import Este
 from oeste import Oeste 
 from habitacion import Habitacion
 from pared import Pared 
+from pared_bomba import ParedBomba
 from bicho import Bicho
 from agresivo import Agresivo
 from perezoso import Perezoso
@@ -29,12 +30,7 @@ class LaberintoBuilder:
     def fabricarLaberinto(self):
         self.laberinto = Laberinto()
         
-    def fabricarPersonaje(self,vidas,posicion,nombre):
-        personaje=Personaje(vidas, posicion, self.laberinto, nombre) 
-        hab=self.laberinto.obtenerHabitacion(posicion)
-        hab.entrar(personaje)
-        self.juego.agregar_personaje(personaje)
-
+    ''''
     def fabricarHabitacion(self, num):
         hab=Habitacion(num)	
         hab.forma=self.fabricarForma()
@@ -44,23 +40,33 @@ class LaberintoBuilder:
         # hab.agregarOrientacion(self.fabricarEste())
         # hab.agregarOrientacion(self.fabricarOeste())
         for each in hab.forma.orientaciones:
-            hab.ponerElementoEnOrientacion(self.fabricarPared(),each)
+            print("eaaaaach",each)
+            
+            hab.ponerElementoEnOrientacion(self.fabricarParedBomba(),each)
         self.laberinto.agregarHabitacion(hab)
         return hab
+    '''
     
-    def interactuarConBichos(self):
-        personaje = self.juego.personaje
-        bichos = self.juego.bichos
+    def fabricarHabitacion(self, num):
+        hab = Habitacion(num)
+        hab.forma = self.fabricarForma()
+        hab.forma.num = num
 
-        for bicho in bichos:
-            if bicho.posicion == personaje.posicion:
-                print(f"Interacción entre {personaje} y {bicho}")
-                personaje.esAtacadoPor(bicho)
-                if personaje.vidas > 0:
-                    bicho.esAtacadoPor(personaje)
+        for each in hab.forma.orientaciones:
+            if isinstance(each, Este):  # Verifica si es la orientación este
+                print("→ Insertando Pared Bomba en el ESTE")
+                hab.ponerElementoEnOrientacion(self.fabricarParedBomba(), each)
+            else:
+                hab.ponerElementoEnOrientacion(self.fabricarPared(), each)
+
+        self.laberinto.agregarHabitacion(hab)
+        return hab
 
     def fabricarPared(self):
         return Pared()
+    
+    def fabricarParedBomba(self):
+        return ParedBomba()
 
     def fabricarPuerta(self, lado1,o1,lado2,o2):
         hab1=self.laberinto.obtenerHabitacion(lado1)

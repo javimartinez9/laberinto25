@@ -22,8 +22,8 @@ class Este(Orientacion):
     def obtenerElemento(self, forma):
         return forma.este
 
-    def caminarAleatorio(self, bicho, forma):
-        forma.este.entrar(bicho)
+    def caminarAleatorio(self, ente, forma):
+        forma.este.entrar(ente)
 
     def aceptar(self, unVisitor, forma):
         forma.este.aceptar(unVisitor)

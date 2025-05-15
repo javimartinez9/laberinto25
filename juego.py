@@ -20,6 +20,7 @@ from cohete import Cohete
 from fantasma import Fantasma
 from supporter import Supporter
 from dormilon import Dormilon
+import sys
 
 class Juego:
     def __init__(self):
@@ -29,7 +30,8 @@ class Juego:
         self.prototipo = None
         self.personaje=None
         self.bicho_threads = {}
-
+        self.running = True 
+   
     def clonarLaberinto(self):
         return copy.deepcopy(self.prototipo)
 
@@ -37,6 +39,18 @@ class Juego:
         bicho.juego = self
         self.bichos.append(bicho)
         
+    def eliminarBicho(self, bicho):
+        if bicho in self.bichos:
+            self.bichos.remove(bicho)
+
+    def hayBichosVivos(self):
+        return any(b.estaVivo() for b in self.bichos)
+    '''
+    def terminarJuego(self):
+        print("Juego terminado. ¡Has ganado!")
+        sys.exit(0)  # Cierra el programa con código 0 (éxito)
+    '''
+    
     def agregar_fantasma(self,fantasma):
         self.fantasmas.append(fantasma)
 
@@ -52,6 +66,7 @@ class Juego:
         if bicho in self.bicho_threads:
             for thread in self.bicho_threads[bicho]:
                 bicho.vidas = 0
+                bicho.running = False 
 
     def lanzarBichos(self):
         for bicho in self.bichos:
@@ -62,16 +77,19 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(10, 1, self, nombre)
+        self.personaje = Personaje(10, 10,self,nombre,10)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
-        if bicho.posicion == self.personaje.posicion:
+        if bicho.posicion.num == self.personaje.posicion.num:
             print(f"El bicho {bicho} ataca al personaje {self.personaje}")
             self.personaje.esAtacadoPor(bicho)
     
-    def buscarBicho(self):
-        pass
+    def buscarBicho(self,bicho):
+        if bicho.posicion.num == self.personaje.posicion.num:
+            print(f"El bicho {bicho} es atacado por el personaje {self.personaje}")
+            bicho.esAtacadoPor(self.personaje)
+                
     def abrir_puertas(self):
         def abrirPuertas(obj):
             if obj.esPuerta():
@@ -281,3 +299,9 @@ class Juego:
 
     def terminarJuego(self):
         self.terminarBichos()
+        if self.personaje.vidas==0:
+            print(" los bichos han ganado el juego")
+        else:
+            print('El personaje ha ganado')
+        
+        

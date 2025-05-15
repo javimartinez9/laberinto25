@@ -1,5 +1,6 @@
 import random
 from point import Point
+from ente import Ente
 class Forma:
     def __init__(self):
         self.orientaciones = []
@@ -26,10 +27,10 @@ class Forma:
     def calcularPosicion(self):
         for orientacion in self.orientaciones:
             orientacion.calcularPosicionDesde(self)
-    def caminarAleatorio(self, bicho):
+    def caminarAleatorio(self,ente):
         orientacion=self.obtenerOrientacionAleatoria()
         print(f"Orientacion aleatoria: {orientacion}")
-        orientacion.caminarAleatorio(bicho, self)
+        orientacion.caminarAleatorio(ente, self)
 
     def obtenerOrientacionAleatoria(self):
         return random.choice(self.orientaciones)

@@ -7,7 +7,7 @@ import time
 
 director = Director()
 
-filename = "./lab4habpersonaje.json"
+filename = "./lab4HabIzd4Bichos.json"
 
 data = director.leerArchivo(filename)
 if data:
@@ -18,26 +18,40 @@ else:
 
 juego = director.procesar(filename)
 juego = director.obtenerJuego()
+juego.agregar_personaje("pepe")
 
 # Ejemplo de uso de recorrer con print
 print("\nRecorriendo el laberinto e imprimiendo:")
 juego.laberinto.recorrer(print)
 
-#mostrar los bichos del juego
+print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num,juego.personaje.poder)
+
+#juego.buscarBicho(self)
+
+# Mostrar los bichos del juego y atacar
 for bicho in juego.bichos:
     print(bicho)
     print(f"Bicho con {bicho.vidas} vidas y {bicho.poder} de poder")
     print(f"Posición {bicho.posicion.num}")
-    juego.buscarPersonaje(bicho) 
-    
+    #juego.buscarPersonaje(bicho)  # Invoca el ataque si el bicho está en la misma posición que el personaje
+    #juego.buscarBicho(bicho)
+# Mostrar los fantasmas y sus atributos
 for fantasma in juego.fantasmas:
     print(fantasma)
     print(f"Fantasma con {fantasma.vidas} vidas y {fantasma.poderMagico} de poderMagico")
     print(f"Posición {fantasma.posicion.num}")
-    
-print("Personaje",juego.personaje.nombre,juego.personaje.vidas)
 
+# Mostrar el personaje y sus atributos
+print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num)
+#juego.buscarBicho()
+
+# Lógica de abrir puertas, lanzar bichos y terminar bichos
 juego.abrir_puertas()
+juego.personaje.caminar()
+print("posicion personaje despues de caminar",juego.personaje.posicion.num)
 juego.lanzarBichos()
+#juego.buscarBicho()
+#juego.terminarBichos()
 time.sleep(3)
-juego.terminarBichos()
+
+

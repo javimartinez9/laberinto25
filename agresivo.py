@@ -11,9 +11,11 @@ class Agresivo(Modo):
 
     def caminar(self, bicho):
         print("Agresivo: Caminando con determinación...")
+        bicho.caminar()
 
     def atacar(self, bicho):
         print("Agresivo: ¡Atacando con furia!")
+        bicho.atacar()  # Llama al ataque real
 
     def __str__(self):
         return "-agresivo"

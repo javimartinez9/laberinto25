@@ -21,8 +21,8 @@ class Sur(Orientacion):
     def obtenerElemento(self, forma):
         return forma.sur
 
-    def caminarAleatorio(self, bicho, forma):
-        forma.sur.entrar(bicho)
+    def caminarAleatorio(self,ente, forma):
+        forma.sur.entrar(ente)
 
     def aceptar(self, unVisitor, forma):
         forma.sur.aceptar(unVisitor)

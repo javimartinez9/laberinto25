@@ -13,7 +13,7 @@ class Orientacion:
 
     def obtenerElemento(self, forma):
         raise NotImplementedError
-    def caminarAleatorio(self, bicho, forma):
+    def caminarAleatorio(self, ente, forma):
         raise NotImplementedError
     def aceptar(self, unVisitor, forma):
         raise NotImplementedError
