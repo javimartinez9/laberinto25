@@ -21,6 +21,10 @@ class Ente:
             print(f"El ente ha muerto")
             self.estadoEnte.morir(self)
 
+    def esSupporteadoPor(self, supporter):
+        print(f"Support time: {self} es supporteado")
+        self.poder+=supporter.poderMagico
+        print("Poder del personaje despues del support :",self.poder)
 
 class Personaje(Ente):
     def __init__(self, vidas, poder, juego, nombre,posicion):

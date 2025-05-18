@@ -7,7 +7,7 @@ import time
 
 director = Director()
 
-filename = "./lab4HabIzd4Bichos.json"
+filename = "./lab4HabFantasmas.json"
 
 data = director.leerArchivo(filename)
 if data:
@@ -28,6 +28,7 @@ print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje
 
 #juego.buscarBicho(self)
 
+'''
 # Mostrar los bichos del juego y atacar
 for bicho in juego.bichos:
     print(bicho)
@@ -36,10 +37,16 @@ for bicho in juego.bichos:
     #juego.buscarPersonaje(bicho)  # Invoca el ataque si el bicho está en la misma posición que el personaje
     #juego.buscarBicho(bicho)
 # Mostrar los fantasmas y sus atributos
+'''
+
+'''
 for fantasma in juego.fantasmas:
     print(fantasma)
     print(f"Fantasma con {fantasma.vidas} vidas y {fantasma.poderMagico} de poderMagico")
     print(f"Posición {fantasma.posicion.num}")
+    juego.buscarPersonajeParaSupportear(fantasma)
+'''
+
 
 # Mostrar el personaje y sus atributos
 print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num)
@@ -47,11 +54,15 @@ print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje
 
 # Lógica de abrir puertas, lanzar bichos y terminar bichos
 juego.abrir_puertas()
-juego.personaje.caminar()
+#juego.personaje.caminar()
 print("posicion personaje despues de caminar",juego.personaje.posicion.num)
+print(juego)
+#juego.lanzarFantasmas()
 juego.lanzarBichos()
+#juego.buscarBicho()
 #juego.buscarBicho()
 #juego.terminarBichos()
 time.sleep(3)
+#juego.terminarFantasmas()
 
 

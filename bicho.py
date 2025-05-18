@@ -36,4 +36,5 @@ class Bicho(Ente):
 
     def __str__(self):
         return "Soy un bicho"+self.modo.__str__()
+
     

@@ -10,6 +10,7 @@ class Contenedor(ElementoMapa):
     def agregar_hijo(self, hijo):
         hijo.padre = self
         self.hijos.append(hijo)
+        print(f"Añadiendo hijo {hijo} a {self}")
 
     def eliminar_hijo(self, hijo):
         self.hijos.remove(hijo)

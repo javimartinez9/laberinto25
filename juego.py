@@ -30,6 +30,7 @@ class Juego:
         self.prototipo = None
         self.personaje=None
         self.bicho_threads = {}
+        self.fantasma_threads={}
         self.running = True 
    
     def clonarLaberinto(self):
@@ -61,6 +62,38 @@ class Juego:
             self.bicho_threads[bicho] = []
         self.bicho_threads[bicho].append(thread)
         thread.start()
+        
+    def lanzarFantasma(self, fantasma):
+        import threading
+        thread1 = threading.Thread(target=fantasma.actua)
+        if fantasma not in self.fantasma_threads:
+            self.fantasma_threads[fantasma] = []
+        self.fantasma_threads[fantasma].append(thread1)
+        thread1.start()
+        
+    def lanzarFantasmas(self):
+        if self.personaje and self.personaje.posicion:
+            for fantasma in self.fantasmas:
+                self.lanzarFantasma(fantasma)
+                    
+        else:
+            print("Esperando a que el personaje esté posicionado antes de lanzar fantasmas.")
+            print("posicion del fantasma",fantasma.posicion.num)
+            
+                    
+    def terminarFantasma(self, fantasma):
+        if fantasma in self.fantasma_threads:
+            for thread in self.fantasma_threads[fantasma]:
+                fantasma.vidas = 0
+                fantasma.running = False 
+                
+    def terminarFantasmas(self):
+        for fantasma in self.fantasmas:
+            self.terminarFantasma(fantasma)
+    
+    def terminarBichos(self):
+        for bicho in self.bichos:
+            self.terminarBicho(bicho)
 
     def terminarBicho(self, bicho):
         if bicho in self.bicho_threads:
@@ -84,11 +117,17 @@ class Juego:
         if bicho.posicion.num == self.personaje.posicion.num:
             print(f"El bicho {bicho} ataca al personaje {self.personaje}")
             self.personaje.esAtacadoPor(bicho)
+            
+    def buscarPersonajeParaSupportear(self,fantasma):
+        if fantasma.posicion.num == self.personaje.posicion.num:
+            print(f"El personaje {fantasma} supportea con poder al personaje {self.personaje}")
+            self.personaje.esSupporteadoPor(fantasma)
     
-    def buscarBicho(self,bicho):
-        if bicho.posicion.num == self.personaje.posicion.num:
-            print(f"El bicho {bicho} es atacado por el personaje {self.personaje}")
-            bicho.esAtacadoPor(self.personaje)
+    def buscarBicho(self):
+        for bicho in self.bichos:
+            if bicho.posicion.num == self.personaje.posicion.num:
+                print(f"El bicho {bicho} es atacado por el personaje {self.personaje}")
+                bicho.esAtacadoPor(self.personaje)
                 
     def abrir_puertas(self):
         def abrirPuertas(obj):
@@ -299,9 +338,7 @@ class Juego:
 
     def terminarJuego(self):
         self.terminarBichos()
+        self.terminarFantasmas()
         if self.personaje.vidas==0:
             print(" los bichos han ganado el juego")
-        else:
-            print('El personaje ha ganado')
-        
         
