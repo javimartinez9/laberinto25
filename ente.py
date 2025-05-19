@@ -20,6 +20,7 @@ class Ente:
         if self.vidas == 0:
             print(f"El ente ha muerto")
             self.estadoEnte.morir(self)
+            self.estadoEnte.morir(self)
 
     def esSupporteadoPor(self, supporter):
         print(f"Support time: {self} es supporteado")
@@ -42,6 +43,7 @@ class Personaje(Ente):
         self.juego.buscarBicho()
         
     def caminar(self):
+        print(self.posicion)
         self.posicion.caminarAleatorio(self)
         print("caminando personaje")
 

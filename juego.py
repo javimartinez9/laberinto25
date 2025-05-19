@@ -20,6 +20,7 @@ from cohete import Cohete
 from fantasma import Fantasma
 from supporter import Supporter
 from dormilon import Dormilon
+import threading
 import sys
 
 class Juego:
@@ -53,6 +54,7 @@ class Juego:
     '''
     
     def agregar_fantasma(self,fantasma):
+        fantasma.juego = self
         self.fantasmas.append(fantasma)
 
     def lanzarBicho(self, bicho):
@@ -72,13 +74,13 @@ class Juego:
         thread1.start()
         
     def lanzarFantasmas(self):
-        if self.personaje and self.personaje.posicion:
-            for fantasma in self.fantasmas:
-                self.lanzarFantasma(fantasma)
+        #if self.personaje and self.personaje.posicion:
+        for fantasma in self.fantasmas:
+            self.lanzarFantasma(fantasma)
                     
-        else:
-            print("Esperando a que el personaje esté posicionado antes de lanzar fantasmas.")
-            print("posicion del fantasma",fantasma.posicion.num)
+        #else:
+        #    print("Esperando a que el personaje esté posicionado antes de lanzar fantasmas.")
+        #    print("posicion del fantasma",fantasma.posicion.num)
             
                     
     def terminarFantasma(self, fantasma):
@@ -86,6 +88,8 @@ class Juego:
             for thread in self.fantasma_threads[fantasma]:
                 fantasma.vidas = 0
                 fantasma.running = False 
+                if thread is not threading.current_thread():
+                    thread.join()
                 
     def terminarFantasmas(self):
         for fantasma in self.fantasmas:
@@ -100,6 +104,10 @@ class Juego:
             for thread in self.bicho_threads[bicho]:
                 bicho.vidas = 0
                 bicho.running = False 
+                if thread is not threading.current_thread():
+                    thread.join()
+                self.bicho_threads.pop(bicho)
+                self.bichos.remove(bicho)
 
     def lanzarBichos(self):
         for bicho in self.bichos:
@@ -110,7 +118,7 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(10, 10,self,nombre,10)
+        self.personaje = Personaje(1000, 1000,self,nombre,10)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
@@ -120,8 +128,9 @@ class Juego:
             
     def buscarPersonajeParaSupportear(self,fantasma):
         if fantasma.posicion.num == self.personaje.posicion.num:
-            print(f"El personaje {fantasma} supportea con poder al personaje {self.personaje}")
-            self.personaje.esSupporteadoPor(fantasma)
+            if self.personaje.vidas > 0:
+                print(f"El personaje {fantasma} supportea con poder al personaje {self.personaje}")
+                self.personaje.esSupporteadoPor(fantasma)
     
     def buscarBicho(self):
         for bicho in self.bichos:
@@ -130,10 +139,23 @@ class Juego:
                 bicho.esAtacadoPor(self.personaje)
                 
     def abrir_puertas(self):
-        def abrirPuertas(obj):
-            if obj.esPuerta():
-                print(f"Abriendo puerta", obj)
-                obj.abrir()
+        def abrirPuertas(obj: Habitacion):
+                objeto = obj.forma.este
+                if objeto.esPuerta():
+                    print(f"Abriendo puerta", obj)
+                    objeto.abrir()
+                objeto = obj.forma.oeste
+                if objeto.esPuerta():
+                    print(f"Abriendo puerta", obj)
+                    objeto.abrir()
+                objeto = obj.forma.norte
+                if objeto.esPuerta():
+                    print(f"Abriendo puerta", obj)
+                    objeto.abrir()
+                objeto = obj.forma.sur
+                if objeto.esPuerta():
+                    print(f"Abriendo puerta", obj)
+                    objeto.abrir()
         self.laberinto.recorrer(abrirPuertas)
 
     def cerrar_puertas(self):

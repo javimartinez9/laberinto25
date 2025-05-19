@@ -22,8 +22,8 @@ class Laberinto(Contenedor):
         return None
     
     def recorrer(self, func):
-        func(self)
         for hijo in self.hijos:
+            func(hijo)
             hijo.recorrer(func)
 
     def entrar(self, alguien):        

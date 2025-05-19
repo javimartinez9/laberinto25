@@ -31,6 +31,7 @@ class Fantasma(Ente):
         #if self.juego is None:
             #print("Error: self.juego no está asignado en el fantasma.")
             #return
+        print(self)
         self.juego.buscarPersonajeParaSupportear(self)
         
     def caminar(self):

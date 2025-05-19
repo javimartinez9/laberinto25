@@ -5,6 +5,14 @@ from habitacion import Habitacion
 from puerta import Puerta
 import time
 
+
+def update(juego):
+    while len(juego.bichos) > 0:
+        juego.personaje.caminar()
+        juego.buscarBicho()
+        time.sleep(3)
+    print("GANÓ EL PERSONAJE")
+
 director = Director()
 
 filename = "./lab4HabFantasmas.json"
@@ -21,10 +29,10 @@ juego = director.obtenerJuego()
 juego.agregar_personaje("pepe")
 
 # Ejemplo de uso de recorrer con print
-print("\nRecorriendo el laberinto e imprimiendo:")
-juego.laberinto.recorrer(print)
+# print("\nRecorriendo el laberinto e imprimiendo:")
+# juego.laberinto.recorrer(r)
 
-print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num,juego.personaje.poder)
+# print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num,juego.personaje.poder)
 
 #juego.buscarBicho(self)
 
@@ -49,20 +57,21 @@ for fantasma in juego.fantasmas:
 
 
 # Mostrar el personaje y sus atributos
-print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num)
+# print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num)
 #juego.buscarBicho()
 
 # Lógica de abrir puertas, lanzar bichos y terminar bichos
 juego.abrir_puertas()
 #juego.personaje.caminar()
 print("posicion personaje despues de caminar",juego.personaje.posicion.num)
-print(juego)
-#juego.lanzarFantasmas()
+juego.lanzarFantasmas()
 juego.lanzarBichos()
+update(juego)
 #juego.buscarBicho()
 #juego.buscarBicho()
 #juego.terminarBichos()
-time.sleep(3)
+#time.sleep(3)
 #juego.terminarFantasmas()
+
 
 
