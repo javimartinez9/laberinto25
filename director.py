@@ -17,7 +17,7 @@ class Director:
         self.fabricarLaberinto()
         self.fabricarJuego()
         self.fabricarBichos()
-        self.fabricarFantasmas()
+        #self.fabricarFantasmas()
 
     def fabricarJuego(self):
         self.builder.fabricarJuego()
@@ -39,16 +39,43 @@ class Director:
         #recorrer la colección de puertas para fabricarlas
         for each in self.dict['puertas']:
             self.builder.fabricarPuerta(each[0],each[1],each[2],each[3])    
-	
+         
+    '''
     def fabricarLaberintoRecursivo(self,each,padre):
+        bomba_activa=False
         print(each)
         if each['tipo']=='habitacion':
+            #print("eaaaach habitacion",each['hijos']['tipo'])
             con=self.builder.fabricarHabitacion(each['num'])
         if each['tipo']=='tunel':
             self.builder.fabricarTunelEn(padre)
         if 'hijos'in each.keys():
             for cadaUno in each['hijos']:
+                print("cadauno",cadaUno['tipo'])   
                 self.fabricarLaberintoRecursivo(cadaUno,con)
+    '''
+    
+    def fabricarLaberintoRecursivo(self, each, padre):
+        if each['tipo'] == 'habitacion':
+            tiene_bomba = False
+            tiene_cohete=False
+            if 'hijos' in each:
+                for hijo in each['hijos']:
+                    if hijo['tipo']== "cohete":
+                        tiene_cohete=True
+                    if hijo['tipo'] == "bomba":
+                        tiene_bomba = True
+                    
+            
+        # Pasamos el flag al construir la habitación
+            hab = self.builder.fabricarHabitacion(each['num'], tiene_bomba,tiene_cohete)
+
+        elif each['tipo'] == 'tunel':
+            self.builder.fabricarTunelEn(padre)
+            if 'hijos' in each:
+                for hijo in each['hijos']:
+                    self.fabricarLaberintoRecursivo(hijo, padre)
+
 
     def leerArchivo(self, filename):
         try:

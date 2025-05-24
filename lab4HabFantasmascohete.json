@@ -1,30 +1,10 @@
 {
 	"forma": "cuadrado_con_fantasmas",
 	"laberinto": [
-		{
-			"tipo": "habitacion",
-			"num": 1,
-			"hijos": [
-				{"tipo": "cohete"}
-			]
-		},
-		{
-			"tipo": "habitacion",
-			"num": 2,
-			"hijos": []
-		},
-		{
-			"tipo": "habitacion",
-			"num": 3,
-			"hijos": []
-		},
-		{
-			"tipo": "habitacion",
-			"num": 4,
-			"hijos": [
-				{"tipo": "bomba"}
-			]
-		}
+		{"tipo": "habitacion", "num": 1, "hijos": ["tipo":"bomba"}]},
+		{"tipo": "habitacion", "num": 2, "hijos": []},
+		{"tipo": "habitacion", "num": 3, "hijos": ["tipo":"bomba"}]},
+		{"tipo": "habitacion", "num": 4, "hijos": []}
 	],
 	"puertas": [
 		[1, "Sur", 2, "Norte"],
@@ -43,4 +23,3 @@
 		{"caracter": "Dormilon", "posicion": 3}
 	]
 }
-

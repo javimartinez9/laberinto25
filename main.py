@@ -53,7 +53,7 @@ coh2=hab2.obtenerElementoEnOrientacion(Oeste())
 print(coh1.cohete_listo)
 print(coh2.cohete_listo)
 """
-
+'''
 juego=Juego()
 # Crear laberinto de 4 habitaciones
 fm = Creator()
@@ -73,6 +73,7 @@ for bicho in juego.bichos:
     print(bicho)
     print(f"bicho con {bicho.vidas} vidas y {bicho.poder} de poder")
     print(f"Posición {bicho.posicion.num}")
+'''
 
 """
 juego=Juego()

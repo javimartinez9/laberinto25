@@ -15,7 +15,9 @@ from perezoso import Perezoso
 from cuadrado import Cuadrado
 from juego import Juego
 from tunel import Tunel
+from pared_cohete import ParedCohete
 from ente import Personaje
+
 
 class LaberintoBuilder:
     def __init__(self):
@@ -47,26 +49,36 @@ class LaberintoBuilder:
         return hab
     '''
     
-    def fabricarHabitacion(self, num):
+    def fabricarHabitacion(self, num, tiene_bomba=False,tiene_cohete=False): 
         hab = Habitacion(num)
         hab.forma = self.fabricarForma()
         hab.forma.num = num
-
+        
         for each in hab.forma.orientaciones:
-            if isinstance(each, Este):  # Verifica si es la orientación este
-                print("→ Insertando Pared Bomba en el ESTE")
+            if tiene_bomba:
+                # Aquí pones pared bomba
                 hab.ponerElementoEnOrientacion(self.fabricarParedBomba(), each)
+                print("insertando paredBomba en ",hab.num,each)
+            elif tiene_cohete:
+                hab.ponerElementoEnOrientacion(self.fabricarParedCohete(),each)
+                print("insertando paredCohete en ",hab.num,each)
+                
             else:
+                # Pared normal
                 hab.ponerElementoEnOrientacion(self.fabricarPared(), each)
 
         self.laberinto.agregarHabitacion(hab)
         return hab
+
 
     def fabricarPared(self):
         return Pared()
     
     def fabricarParedBomba(self):
         return ParedBomba()
+    
+    def fabricarParedCohete(self):
+        return ParedCohete()
 
     def fabricarPuerta(self, lado1,o1,lado2,o2):
         hab1=self.laberinto.obtenerHabitacion(lado1)

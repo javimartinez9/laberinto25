@@ -29,8 +29,8 @@ juego = director.obtenerJuego()
 juego.agregar_personaje("pepe")
 
 # Ejemplo de uso de recorrer con print
-# print("\nRecorriendo el laberinto e imprimiendo:")
-# juego.laberinto.recorrer(r)
+#print("\nRecorriendo el laberinto e imprimiendo:")
+#juego.laberinto.recorrer(print)
 
 # print("Personaje", juego.personaje.nombre, juego.personaje.vidas,juego.personaje.posicion.num,juego.personaje.poder)
 

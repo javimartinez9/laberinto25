@@ -4,6 +4,7 @@ from director import Director
 from fantasma import Fantasma
 from supporter import Supporter
 from dormilon import Dormilon
+import time
 
 class TestLaberintoBuilderConFantasmas(unittest.TestCase):
 
@@ -47,6 +48,11 @@ class TestLaberintoBuilderConFantasmas(unittest.TestCase):
         # Verificar que ambos están en la habitación 1
         self.assertEqual(f1.posicion.num, 1)
         self.assertEqual(f2.posicion.num, 1)
+        
+        juego.agregar_personaje("pepe")
+        juego.lanzarFantasmas()
+        time.sleep(3)
+        juego.terminarFantasmas()
 
 if __name__ == '__main__':
     unittest.main()
