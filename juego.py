@@ -118,7 +118,7 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(1000, 1000,self,nombre,10)
+        self.personaje = Personaje(100, 1000,self,nombre,10)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
@@ -363,4 +363,5 @@ class Juego:
         self.terminarFantasmas()
         if self.personaje.vidas==0:
             print(" los bichos han ganado el juego")
+            
         

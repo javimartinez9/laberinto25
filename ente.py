@@ -40,12 +40,16 @@ class Personaje(Ente):
         tunel.puedeClonarLaberinto()
 
     def atacar(self):
-        self.juego.buscarBicho()
+        #while self.estaVivo:
+            self.juego.buscarBicho()
         
     def caminar(self):
-        print(self.posicion)
-        self.posicion.caminarAleatorio(self)
-        print("caminando personaje")
-
+            print(self.posicion)
+            self.posicion.caminarAleatorio(self)
+            print("caminando personaje")
+            
+    def estaVivo(self):
+        return self.vidas > 0
+    
     def __str__(self):
         return str(self.nombre)

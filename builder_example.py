@@ -4,14 +4,22 @@ from laberinto import Laberinto
 from habitacion import Habitacion
 from puerta import Puerta
 import time
+import sys
 
 
 def update(juego):
     while len(juego.bichos) > 0:
+        #juego.personaje.caminar()
+        #if juego.personaje.vidas>0:
+        print("posicion de pepe",juego.personaje.posicion.num)
         juego.personaje.caminar()
         juego.buscarBicho()
         time.sleep(3)
-    print("GANÓ EL PERSONAJE")
+    #if juego.personaje.vidas>0:
+    if juego.personaje.vidas>0:
+        print("GANÓ EL PERSONAJE")
+    else:
+        print("ganan los bichos")
 
 director = Director()
 

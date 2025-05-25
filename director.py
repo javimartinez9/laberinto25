@@ -17,7 +17,7 @@ class Director:
         self.fabricarLaberinto()
         self.fabricarJuego()
         self.fabricarBichos()
-        #self.fabricarFantasmas()
+        self.fabricarFantasmas()
 
     def fabricarJuego(self):
         self.builder.fabricarJuego()
