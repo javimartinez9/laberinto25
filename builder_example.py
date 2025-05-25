@@ -5,10 +5,12 @@ from habitacion import Habitacion
 from puerta import Puerta
 import time
 import sys
+import os
+import signal
 
 
 def update(juego):
-    while len(juego.bichos) > 0:
+    while len(juego.bichos) > 0 and juego.personaje.vidas>0:
         #juego.personaje.caminar()
         #if juego.personaje.vidas>0:
         print("posicion de pepe",juego.personaje.posicion.num)
@@ -20,6 +22,8 @@ def update(juego):
         print("GANÓ EL PERSONAJE")
     else:
         print("ganan los bichos")
+    juego.terminarJuego()
+    os.kill(os.getpid(),signal.SIGTERM)
 
 director = Director()
 
@@ -80,6 +84,3 @@ update(juego)
 #juego.terminarBichos()
 #time.sleep(3)
 #juego.terminarFantasmas()
-
-
-

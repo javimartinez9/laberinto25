@@ -59,16 +59,16 @@ class Juego:
 
     def lanzarBicho(self, bicho):
         import threading
-        thread = threading.Thread(target=bicho.actua)
         if bicho not in self.bicho_threads:
+            thread = threading.Thread(target=bicho.actua)
             self.bicho_threads[bicho] = []
         self.bicho_threads[bicho].append(thread)
         thread.start()
         
     def lanzarFantasma(self, fantasma):
         import threading
-        thread1 = threading.Thread(target=fantasma.actua)
         if fantasma not in self.fantasma_threads:
+            thread1 = threading.Thread(target=fantasma.actua)
             self.fantasma_threads[fantasma] = []
         self.fantasma_threads[fantasma].append(thread1)
         thread1.start()
@@ -106,8 +106,13 @@ class Juego:
                 bicho.running = False 
                 if thread is not threading.current_thread():
                     thread.join()
-                self.bicho_threads.pop(bicho)
-                self.bichos.remove(bicho)
+                try:
+                    self.bicho_threads.pop(bicho)
+                    self.bichos.remove(bicho)
+                except Exception:
+                    print("Bicho ya eliminado")
+                
+                
 
     def lanzarBichos(self):
         for bicho in self.bichos:
@@ -118,13 +123,24 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(100, 1000,self,nombre,10)
+        self.personaje = Personaje(100, 1000,self,nombre,None)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
         if bicho.posicion.num == self.personaje.posicion.num:
             print(f"El bicho {bicho} ataca al personaje {self.personaje}")
             self.personaje.esAtacadoPor(bicho)
+        # Priorizamos ataque a personajes antes que a personajes de apoyo
+        else:
+            haAtacado = False
+            i = 0
+            # Solo ataca a 1 mago, no a todos los de la sala
+            while haAtacado == False:
+                mago = self.magos[i]
+                if bicho.posicion.num == mago.posicion.num:
+                    print(f"El mago {mago} es atacado por el bicho {bicho}")
+                    mago.esAtacadoPor(bicho)
+                    haAtacado = True
             
     def buscarPersonajeParaSupportear(self,fantasma):
         if fantasma.posicion.num == self.personaje.posicion.num:

@@ -20,7 +20,7 @@ class Ente:
         if self.vidas == 0:
             print(f"El ente ha muerto")
             self.estadoEnte.morir(self)
-            self.estadoEnte.morir(self)
+    
 
     def esSupporteadoPor(self, supporter):
         print(f"Support time: {self} es supporteado")
@@ -28,7 +28,7 @@ class Ente:
         print("Poder del personaje despues del support :",self.poder)
 
 class Personaje(Ente):
-    def __init__(self, vidas, poder, juego, nombre,posicion):
+    def __init__(self, vidas, poder, juego, nombre, posicion):
         super().__init__()
         self.nombre = nombre
         self.vidas = vidas
