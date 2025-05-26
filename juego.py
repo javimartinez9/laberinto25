@@ -123,24 +123,13 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(100, 1000,self,nombre,None)
+        self.personaje = Personaje(3, 1,self,nombre,None)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
         if bicho.posicion.num == self.personaje.posicion.num:
             print(f"El bicho {bicho} ataca al personaje {self.personaje}")
             self.personaje.esAtacadoPor(bicho)
-        # Priorizamos ataque a personajes antes que a personajes de apoyo
-        else:
-            haAtacado = False
-            i = 0
-            # Solo ataca a 1 mago, no a todos los de la sala
-            while haAtacado == False:
-                mago = self.magos[i]
-                if bicho.posicion.num == mago.posicion.num:
-                    print(f"El mago {mago} es atacado por el bicho {bicho}")
-                    mago.esAtacadoPor(bicho)
-                    haAtacado = True
             
     def buscarPersonajeParaSupportear(self,fantasma):
         if fantasma.posicion.num == self.personaje.posicion.num:
