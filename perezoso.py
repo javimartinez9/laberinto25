@@ -11,9 +11,11 @@ class Perezoso(Modo):
 
     def caminar(self, bicho):
         print("Perezoso: Caminando sin ganas...")
+        bicho.caminar()
 
     def atacar(self, bicho):
-        print("Perezoso: Intentando atacar...")
+        #print("Perezoso: Intentando atacar...")
+        bicho.atacar()
 
     def __str__(self):
         return "-perezoso"

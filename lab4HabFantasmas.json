@@ -11,12 +11,16 @@
 		{
 			"tipo": "habitacion",
 			"num": 2,
-			"hijos": []
+			"hijos": [
+				{"tipo": "pinchos"}
+			]
 		},
 		{
 			"tipo": "habitacion",
 			"num": 3,
-			"hijos": []
+			"hijos": [
+				{ "tipo": "poder" }
+			]
 		},
 		{
 			"tipo": "habitacion",
@@ -41,6 +45,17 @@
 	"fantasmas": [
 		{"caracter": "Supporter", "posicion": 1},
 		{"caracter": "Dormilon", "posicion": 3}
+	],
+	"magos": [
+		{
+			"personalidad": "Activo",
+			"posicion": 1
+		},
+		{
+			"personalidad": "Vago",
+			"posicion": 3
+		}
 	]
+
 }
 

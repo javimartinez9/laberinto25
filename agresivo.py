@@ -14,7 +14,7 @@ class Agresivo(Modo):
         bicho.caminar()
 
     def atacar(self, bicho):
-        print("Agresivo: ¡Atacando con furia!")
+        #print("Agresivo: ¡Atacando con furia!")
         bicho.atacar()  # Llama al ataque real
 
     def __str__(self):

@@ -15,6 +15,5 @@ class Supporter(Caracter):
         print("Supporter: Flotando con determinación...")
         fantasma.caminar()
 
-    def atacar(self,fantasma):
-        print("Supporter: ¡Supporteando fantasmagoricamente!")
+    def supportear(self,fantasma):
         fantasma.supportear()  # Llama al ataque real

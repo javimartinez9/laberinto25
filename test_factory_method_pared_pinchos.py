@@ -1,14 +1,14 @@
 import unittest
 from juego import Juego
-from creator import CreatorC
+from creator import CreatorD
 from este import Este
 from oeste import Oeste
-from pared_cohete import ParedCohete
+from pared_pinchos import ParedPinchos
 
-class TestFactoryMethodParedCohete(unittest.TestCase):
-    def test_crear_laberinto_con_paredes_cohete(self):
+class TestFactoryMethodParedPinchos(unittest.TestCase):
+    def test_crear_laberinto_con_paredes_pinchos(self):
         juego = Juego()
-        fmc = CreatorC()
+        fmc = CreatorD()
         laberinto = juego.crearLaberinto2HabFM(fmc)
 
         hab1 = laberinto.obtenerHabitacion(1)
@@ -20,12 +20,12 @@ class TestFactoryMethodParedCohete(unittest.TestCase):
 
         # Verificar que ambas paredes son instancias de ParedCohete
         
-        self.assertIsInstance(pared_este, ParedCohete)
-        self.assertIsInstance(pared_oeste, ParedCohete)
+        self.assertIsInstance(pared_este, ParedPinchos)
+        self.assertIsInstance(pared_oeste, ParedPinchos)
 
         # Verificar que el cohete está listo en ambas paredes
-        self.assertTrue(pared_este.cohete_listo)
-        self.assertTrue(pared_oeste.cohete_listo)
+        self.assertTrue(pared_este.pincho_preparado)
+        self.assertTrue(pared_oeste.pincho_preparado)
 
 if __name__ == '__main__':
     unittest.main()

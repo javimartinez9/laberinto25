@@ -18,6 +18,7 @@ class Director:
         self.fabricarJuego()
         self.fabricarBichos()
         self.fabricarFantasmas()
+        self.fabricarMagos()
 
     def fabricarJuego(self):
         self.builder.fabricarJuego()
@@ -58,17 +59,27 @@ class Director:
     def fabricarLaberintoRecursivo(self, each, padre):
         if each['tipo'] == 'habitacion':
             tiene_bomba = False
+            tiene_pinchos=False
             tiene_cohete=False
+            tiene_poder=False
+            tiene_cohete_decorator=False
+            
             if 'hijos' in each:
                 for hijo in each['hijos']:
                     if hijo['tipo']== "cohete":
                         tiene_cohete=True
                     if hijo['tipo'] == "bomba":
                         tiene_bomba = True
+                    if hijo['tipo']=="pinchos":
+                        tiene_pinchos=True
+                    if hijo['tipo']=="poder":
+                        tiene_poder=True
+                    #if hijo['tipo']=="cohete_decorator":
+                        #tiene_cohete_decorator=True
                     
             
         # Pasamos el flag al construir la habitación
-            hab = self.builder.fabricarHabitacion(each['num'], tiene_bomba,tiene_cohete)
+            hab = self.builder.fabricarHabitacion(each['num'], tiene_bomba,tiene_cohete,tiene_pinchos,tiene_poder)
 
         elif each['tipo'] == 'tunel':
             self.builder.fabricarTunelEn(padre)
@@ -97,3 +108,7 @@ class Director:
     def fabricarFantasmas(self):
         for each in self.dict['fantasmas']:
             self.builder.fabricarFantasma(each['caracter'],each['posicion'])
+    
+    def fabricarMagos(self):
+        for each in self.dict['magos']:
+            self.builder.fabricarMago(each['personalidad'],each['posicion'])

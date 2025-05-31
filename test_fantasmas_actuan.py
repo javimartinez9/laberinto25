@@ -17,6 +17,10 @@ class TestCrearLaberintoConFantasmasYBichos(unittest.TestCase):
         # ----------- Fantasmas -----------
         print(f"[Info] Fantasmas creados: {len(juego.fantasmas)}")
         self.assertEqual(len(juego.fantasmas), 4)
+        
+         # ----------- Magos -----------
+        print(f"[Info] Magos creados: {len(juego.magos)}")
+        self.assertEqual(len(juego.magos), 4)
 
         tipos_fantasmas = []
         posiciones_fantasmas = []
@@ -32,6 +36,21 @@ class TestCrearLaberintoConFantasmasYBichos(unittest.TestCase):
         self.assertEqual(tipos_fantasmas.count('-supporter'), 2)
         self.assertEqual(tipos_fantasmas.count('-dormilon'), 2)
         self.assertSetEqual(set(posiciones_fantasmas), {1, 2, 3, 4})
+        
+        tipos_magos = []
+        posiciones_magos = []
+        for i, mago in enumerate(juego.magos, start=1):
+            print(f"[Mago {i}] Posición: {mago.posicion.num}, Tipo: {mago.personalidad}")
+            self.assertIsNotNone(mago.posicion)
+            self.assertIn(mago.personalidad.__str__(), ['-activo', '-vago'])
+            self.assertGreaterEqual(mago.vidas, 0)
+            self.assertGreaterEqual(mago.poderMagico, 0)
+            tipos_magos.append(mago.personalidad.__str__())
+            posiciones_magos.append(mago.posicion.num)
+
+        self.assertEqual(tipos_magos.count('-activo'), 2)
+        self.assertEqual(tipos_magos.count('-vago'), 2)
+        self.assertSetEqual(set(posiciones_magos), {1, 2, 3, 4})
 
         # ----------- Bichos -----------
         print(f"[Info] Bichos creados: {len(juego.bichos)}")
@@ -66,6 +85,25 @@ class TestCrearLaberintoConFantasmasYBichos(unittest.TestCase):
             fantasma.actua()
             caracter_mock.actuar.assert_called_once_with(fantasma)
             print(f"[OK] Fantasma {i} actuó correctamente")
+    
+    @patch('time.sleep', return_value=None)  # Evita ralentizar la prueba
+    def test_lanzar_magos_actuan(self, _):
+        print("\n[Test] Verificando que los magos actúan")
+        juego = Juego()
+        creador = Creator()
+        juego.crearLaberinto4HabFantasmas(creador)
+
+        for i, mago in enumerate(juego.magos, start=1):
+            print(f"[Mock] Preparando mago {i}")
+            personalidad_mock = MagicMock()
+            mago.personalidad = personalidad_mock
+            mago.vidas = 1
+            mago.estaVivo = MagicMock(side_effect=[True, False])  # Simula vida activa y luego termina
+
+            # Simular acción
+            mago.actua()
+            personalidad_mock.actuar.assert_called_once_with(mago)
+            print(f"[OK] Mago {i} actuó correctamente")
 
 if __name__ == '__main__':
     unittest.main()

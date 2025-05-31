@@ -1,4 +1,4 @@
-from juego import Habitacion, Laberinto, Pared, Puerta, ParedBomba, Bomba, Bicho, Agresivo, Perezoso,ParedCohete,Cohete,Fantasma,Supporter,Dormilon
+from juego import Habitacion, Laberinto, Pared, Puerta, ParedBomba, Bomba, Bicho, Agresivo, Perezoso,ParedCohete,Cohete,Fantasma,Supporter,Dormilon,ParedPinchos,Pinchos,ParedPoder
 from norte import Norte
 from sur import Sur
 from este import Este
@@ -55,7 +55,10 @@ class Creator:
     
     def crear_cohete(self, em):
         return Cohete(em)
-
+    
+    def crear_pinchos(self, em):
+        return Pinchos(em)
+    
     def crear_bicho(self,vidas,poder,posicion,modo):
         bicho=Bicho()
         bicho.vidas=vidas
@@ -87,4 +90,15 @@ class CreatorC(Creator):
     def crear_pared(self):
         print("🛠 CreatorC ha creado una ParedCohete")
         return ParedCohete()
+    
+class CreatorD(Creator):
+    def crear_pared(self):
+        print("🛠 CreatorD ha creado una ParedPinchos")
+        return ParedPinchos()
+    
+class CreatorE(Creator):
+    def crear_pared(self):
+        print("🛠 CreatorE ha creado una ParedPoder")
+        return ParedPoder()
+
        

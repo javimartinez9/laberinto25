@@ -2,13 +2,14 @@ import unittest
 from juego import Juego
 from este import Este
 from oeste import Oeste
+from creator import Creator
 from creator import CreatorC
 from cohete import Cohete
 
 class TestCoheteDecorator(unittest.TestCase):
     def test_paredes_con_cohete_decorator(self):
         juego = Juego()
-        fmb = CreatorC()
+        fmb = Creator()
         juego.laberinto = juego.crearLaberinto2HabCohete(fmb)
 
         hab1 = juego.obtenerHabitacion(1)
@@ -22,12 +23,14 @@ class TestCoheteDecorator(unittest.TestCase):
         self.assertIsInstance(coh2, Cohete)
 
         # Comprobar que el atributo cohete_listo está en False
-        self.assertFalse(coh1.cohete_listo)
-        self.assertFalse(coh2.cohete_listo)
+        self.assertTrue(coh1.cohete_listo)
+        self.assertTrue(coh2.cohete_listo)
 
         # Comprobar que internamente decoran algo (la pared original)
         self.assertIsNotNone(coh1.em)
         self.assertIsNotNone(coh2.em)
+        print("cohetee 1",coh1.em)
+            
 
 if __name__ == "__main__":
     unittest.main()

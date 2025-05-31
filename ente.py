@@ -26,6 +26,11 @@ class Ente:
         print(f"Support time: {self} es supporteado")
         self.poder+=supporter.poderMagico
         print("Poder del personaje despues del support :",self.poder)
+        
+    def esSupporteadoPorMago(self, supporter):
+        print(f"Support time: {self} es supporteado")
+        self.poder+=supporter.poderMagico
+        print("Poder del personaje despues del support del mago :",self.poder)
 
 class Personaje(Ente):
     def __init__(self, vidas, poder, juego, nombre, posicion):

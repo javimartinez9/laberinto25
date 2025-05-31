@@ -1,38 +1,38 @@
-from caracter import Caracter
-from supporter import Supporter
-from dormilon import Dormilon
+from personalidad import Personalidad
+from activo import Activo
+from vago import Vago
 from ente import Ente
 from estado_ente import Vivo,Muerto
 
-class Fantasma(Ente):
+class Mago(Ente):
     def __init__(self):
         super().__init__()
         self.vidas = None
         self.poderMagico = None
         self.posicion = None
-        self.caracter = None
+        self.personalidad = None
         self.running = True
 
-    def iniSupporter(self):
-        self.caracter = Supporter()
-        self.poderMagico = 10
-        self.vidas = 15
+    def iniActivo(self):
+        self.personalidad = Activo()
+        self.poderMagico = 2
+        self.vidas = 5
 
-    def iniDormilon(self):
-        self.caracter=Dormilon()
+    def iniVago(self):
+        self.personalidad=Vago()
         self.poderMagico = 0
-        self.vidas = 15
+        self.vidas = 5
         
     def actua(self):
             while self.estaVivo() and self.running:
-                self.caracter.actuar(self)
+                self.personalidad.actuar(self)
             
-    def supportear(self):
+    def ayudar(self):
         #if self.juego is None:
             #print("Error: self.juego no está asignado en el fantasma.")
             #return
         print(self)
-        self.juego.buscarPersonajeParaSupportear(self)
+        self.juego.buscarPersonajeParaSupportearMago(self)
         
     def caminar(self):
         self.posicion.caminarAleatorio(self)
@@ -41,4 +41,4 @@ class Fantasma(Ente):
         return self.vidas > 0
 
     def __str__(self):
-        return "Soy un fantasma"+self.caracter.__str__()
+        return "Soy un mago"+self.personalidad.__str__()

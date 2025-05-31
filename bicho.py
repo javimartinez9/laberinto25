@@ -14,17 +14,17 @@ class Bicho(Ente):
         
 
     def actua(self):
-        while self.estaVivo():
+        while self.estaVivo() and self.running:
             self.modo.actuar(self)
 
     def iniAgresivo(self):
         self.modo = Agresivo()
         self.poder = 10
-        self.vidas = 5
+        self.vidas = 15
 
     def iniPerezoso(self):
         self.poder = 1
-        self.vidas = 5
+        self.vidas = 15
 
     def atacar(self):
         self.juego.buscarPersonaje(self)

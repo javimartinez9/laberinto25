@@ -1,11 +1,11 @@
 from decorator import Decorator
 
-class Cohete(Decorator):
+class Pinchos(Decorator):
     def __init__(self, em):
         super().__init__(em)
-        self.cohete_listo=True
+        self.pincho_preparado=True
 
-    def esCohete(self):
+    def esPinchos(self):
         return True
     
     def entrar(self, ente):
@@ -13,16 +13,16 @@ class Cohete(Decorator):
         self.em.entrar(ente)
 
         # Ahora la lógica del cohete
-        if self.cohete_listo:
-            print("🚀 Te ha dado un cohete (decorador)")
-            ente.vidas -= 1
+        if self.pincho_preparado:
+            print("🗡️ Te ha dado un pincho(decorador)")
+            ente.vidas -= 2
             print(f"⚠️  {ente} pierde una vida. Vidas restantes: {ente.vidas}")
             if ente.vidas <= 0:
                 ente.vidas = 0
                 ente.estadoEnte.morir(ente)
-            self.cohete_listo = False
+            self.pincho_preparado = False
         else:
-            print("El cohete del decorador ya se usó")
+            print("El pincho del decorador ya se usó")
 
     def __str__(self):
-        return "Soy un cohete"
+        return "Soy un pincho"

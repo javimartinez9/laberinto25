@@ -20,6 +20,12 @@ from cohete import Cohete
 from fantasma import Fantasma
 from supporter import Supporter
 from dormilon import Dormilon
+from pared_pinchos import ParedPinchos
+from pinchos import Pinchos
+from mago import Mago
+from activo import Activo
+from vago import Vago
+from pared_poder import ParedPoder
 import threading
 import sys
 
@@ -28,10 +34,12 @@ class Juego:
         self.habitaciones = {}
         self.bichos = []
         self.fantasmas=[]
+        self.magos = []
         self.prototipo = None
         self.personaje=None
         self.bicho_threads = {}
         self.fantasma_threads={}
+        self.magos_threads={}
         self.running = True 
    
     def clonarLaberinto(self):
@@ -56,6 +64,10 @@ class Juego:
     def agregar_fantasma(self,fantasma):
         fantasma.juego = self
         self.fantasmas.append(fantasma)
+        
+    def agregar_mago(self,mago):
+        mago.juego = self
+        self.magos.append(mago)
 
     def lanzarBicho(self, bicho):
         import threading
@@ -82,7 +94,32 @@ class Juego:
         #    print("Esperando a que el personaje esté posicionado antes de lanzar fantasmas.")
         #    print("posicion del fantasma",fantasma.posicion.num)
             
+    def lanzarMago(self, mago):
+        import threading
+        if mago not in self.magos_threads:
+            thread2 = threading.Thread(target=mago.actua)
+            self.magos_threads[mago] = []
+        self.magos_threads[mago].append(thread2)
+        thread2.start()
+        
+    def lanzarMagos(self):
+        #if self.personaje and self.personaje.posicion:
+        for mago in self.magos:
+            self.lanzarMago(mago)
+            
+    def terminarMago(self,mago):
+        if mago in self.magos_threads:
+            for thread in self.magos_threads[mago]:
+                mago.vidas = 0
+                mago.running = False 
+                if thread is not threading.current_thread():
+                    thread.join()
                     
+    def terminarMagos(self):
+        for mago in self.magos:
+            self.terminarMago(mago)
+                
+                         
     def terminarFantasma(self, fantasma):
         if fantasma in self.fantasma_threads:
             for thread in self.fantasma_threads[fantasma]:
@@ -123,7 +160,7 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(3, 1,self,nombre,None)
+        self.personaje = Personaje(1000,1000,self,nombre,None)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
@@ -134,8 +171,14 @@ class Juego:
     def buscarPersonajeParaSupportear(self,fantasma):
         if fantasma.posicion.num == self.personaje.posicion.num:
             if self.personaje.vidas > 0:
-                print(f"El personaje {fantasma} supportea con poder al personaje {self.personaje}")
+                print(f"El fantasma {fantasma} supportea con poder al personaje {self.personaje}")
                 self.personaje.esSupporteadoPor(fantasma)
+                
+    def buscarPersonajeParaSupportearMago(self,mago):
+        if mago.posicion.num == self.personaje.posicion.num:
+            if self.personaje.vidas > 0:
+                print(f"El mago {mago} supportea con poder al personaje {self.personaje}")
+                self.personaje.esSupporteadoPorMago(mago)
     
     def buscarBicho(self):
         for bicho in self.bichos:
@@ -174,7 +217,7 @@ class Juego:
         # Lógica para iniciar el juego
         pass
 
-    def crearLaberinto2HabFM(self, creator):
+    def crearLaberinto2HabFM2(self, creator):
         laberinto = creator.crear_laberinto()
         habitacion1 = creator.crear_habitacion(1)
         habitacion2 = creator.crear_habitacion(2)
@@ -206,7 +249,7 @@ class Juego:
         laberinto.agregarHabitacion(habitacion2)
         return laberinto
     
-    def crearLaberinto2HabCoheteFM(self, creator):
+    def crearLaberinto2HabFM(self, creator):
         laberinto = creator.crear_laberinto()
         habitacion1 = creator.crear_habitacion(1)
         habitacion2 = creator.crear_habitacion(2)
@@ -241,6 +284,27 @@ class Juego:
         pared2 = creator.crear_pared()
         cohete2 = creator.crear_cohete(pared2)
         habitacion2.ponerElementoEnOrientacion(cohete2, Oeste())
+
+        laberinto.agregarHabitacion(habitacion1)
+        laberinto.agregarHabitacion(habitacion2)
+        return laberinto
+    
+    def crearLaberinto2HabPinchos(self, creator):
+        laberinto = creator.crear_laberinto()
+        habitacion1 = creator.crear_habitacion(1)
+        habitacion2 = creator.crear_habitacion(2)
+        puerta = creator.crear_puerta(habitacion1, habitacion2)
+
+        habitacion1.ponerElementoEnOrientacion(puerta, Norte())
+        habitacion2.ponerElementoEnOrientacion(puerta, Sur())
+
+        pared1 = creator.crear_pared()
+        pinchos1 = creator.crear_pinchos(pared1)
+        habitacion1.ponerElementoEnOrientacion(pinchos1, Este())
+
+        pared2 = creator.crear_pared()
+        pinchos2 = creator.crear_pinchos(pared2)
+        habitacion2.ponerElementoEnOrientacion(pinchos2, Oeste())
 
         laberinto.agregarHabitacion(habitacion1)
         laberinto.agregarHabitacion(habitacion2)
@@ -354,6 +418,33 @@ class Juego:
         habitacion2.fantasma = fantasma2
         habitacion3.fantasma = fantasma3
         habitacion4.fantasma = fantasma4
+        
+        # Crear y configurar los fantasmas
+        mago1 = Mago()
+        mago1.iniActivo()  # Inicializar como Supporter
+        mago1.posicion = habitacion1
+        self.agregar_mago(mago1)
+
+        mago2 = Mago()
+        mago2.iniVago()  # Inicializar como Dormilon
+        mago2.posicion = habitacion2
+        self.agregar_mago(mago2)
+
+        mago3 = Mago()
+        mago3.iniActivo()  # Inicializar como Supporter
+        mago3.posicion = habitacion3
+        self.agregar_mago(mago3)
+
+        mago4 = Mago()
+        mago4.iniVago()  # Inicializar como Dormilon
+        mago4.posicion = habitacion4
+        self.agregar_mago(mago4)
+
+        # Asignar los fantasmas a las habitaciones
+        habitacion1.mago = mago1
+        habitacion2.mago = mago2
+        habitacion3.mago = mago3
+        habitacion4.mago = mago4
 
         laberinto.agregarHabitacion(habitacion1)
         laberinto.agregarHabitacion(habitacion2)
@@ -366,6 +457,7 @@ class Juego:
     def terminarJuego(self):
         self.terminarBichos()
         self.terminarFantasmas()
+        self.terminarMagos()
         if self.personaje.vidas==0:
             print(" los bichos han ganado el juego")
             

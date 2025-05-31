@@ -4,7 +4,7 @@ class Caracter:
     def actuar(self,fantasma):
         self.dormir(fantasma)
         self.caminar(fantasma)
-        self.atacar(fantasma)
+        self.supportear(fantasma)
         
     def dormir(self, fantasma):
         pass
@@ -12,7 +12,7 @@ class Caracter:
     def caminar(self,fantasma):
         pass
 
-    def atacar(self,fantasma):
+    def supportear(self,fantasma):
         pass
     def __str__(self):
         return "Soy un caracter"
