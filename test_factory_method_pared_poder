@@ -1,6 +1,6 @@
 import unittest
 from juego import Juego
-from creator import CreatorE
+from creator import Creator
 from este import Este
 from oeste import Oeste
 from pared_poder import ParedPoder
@@ -8,7 +8,7 @@ from pared_poder import ParedPoder
 class TestFactoryMethodParedPoder(unittest.TestCase):
     def test_crear_laberinto_con_paredes_cohete(self):
         juego = Juego()
-        fmc = CreatorE()
+        fmc = Creator()
         laberinto = juego.crearLaberinto2HabFM(fmc)
 
         hab1 = laberinto.obtenerHabitacion(1)

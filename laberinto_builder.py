@@ -70,7 +70,7 @@ class LaberintoBuilder:
                     pared=self.fabricarPared()
                     coh1=self.fabricarCohete(pared)
                     hab.ponerElementoEnOrientacion(coh1,each)
-                    print("insertando cohete con decorator ")
+                    print("insertando cohete con decorator en ",hab.num,each)
                         
             elif tiene_pinchos:
                 if isinstance(each, Este) or isinstance(each, Oeste):
@@ -80,7 +80,7 @@ class LaberintoBuilder:
                     pared=self.fabricarPared()
                     pin1=self.fabricarPinchos(pared)
                     hab.ponerElementoEnOrientacion(pin1,each)
-                    print("insertando pinchos con decorator ")
+                    print("insertando pinchos con decorator en ",hab.num,each)
                         
             elif tiene_poder:
                 hab.ponerElementoEnOrientacion(self.fabricarParedPoder(),each)

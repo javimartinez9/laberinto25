@@ -160,7 +160,7 @@ class Juego:
             self.terminarBicho(bicho)
 
     def agregar_personaje(self, nombre):
-        self.personaje = Personaje(1000,1000,self,nombre,None)
+        self.personaje = Personaje(5,5,self,nombre,None)
         self.laberinto.entrar(self.personaje)
 
     def buscarPersonaje(self,bicho):
